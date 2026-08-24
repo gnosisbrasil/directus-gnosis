@@ -1,0 +1,14 @@
+{
+	"name": "directus-extension-comentarios-admin",
+	"version": "1.0.0",
+	"type": "module",
+	"directus:extension": {
+		"type": "module",
+		"path": "dist/index.js",
+		"source": "src/index.ts",
+		"host": "^12.0.0"
+	},
+	"scripts": {
+		"build": "directus-extension build"
+	}
+}
