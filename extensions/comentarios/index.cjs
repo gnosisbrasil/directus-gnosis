@@ -52,7 +52,7 @@ module.exports = function registerEndpoint(router, { database }) {
 
 		// inserir com status "pending" (aguardando moderação)
 		try {
-			const [id] = await database("comentarios").insert({
+			const inserted = await database("comentarios").insert({
 				wp_id: null,
 				post_id,
 				parent: parent ? parseInt(parent, 10) : 0,
@@ -62,9 +62,11 @@ module.exports = function registerEndpoint(router, { database }) {
 				content: String(content).trim(),
 				date: new Date(),
 				status: "pending",
-			});
+			}).returning("id");
+			const id = Array.isArray(inserted) ? inserted[0]?.id ?? inserted[0] : inserted;
 			return res.json({ data: { id, status: "pending" } });
 		} catch (e) {
+			console.error("[comentarios] erro no insert:", e);
 			return res.status(500).json({ errors: [{ message: "Erro ao salvar o comentário" }] });
 		}
 	});
