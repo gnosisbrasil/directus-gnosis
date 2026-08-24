@@ -106,7 +106,6 @@ function blocksToHtml(blocks) {
 }
 
 module.exports = function registerHook({ filter, logger }) {
-	console.log("[blocks2html] hook registered");
 	filter("items.create", async (payload) => transform(payload));
 	filter("items.update", async (payload) => transform(payload));
 	filter("items.create.any", async (payload) => transform(payload));
@@ -114,7 +113,6 @@ module.exports = function registerHook({ filter, logger }) {
 
 	function transform(payload) {
 		if (!payload || payload[FIELD] == null) return payload;
-		console.log("[blocks2html] payload keys:", Object.keys(payload).join(","));
 		try {
 			const json = typeof payload[FIELD] === "string" ? JSON.parse(payload[FIELD]) : payload[FIELD];
 			if (json && Array.isArray(json.blocks) && json.blocks.length) {
