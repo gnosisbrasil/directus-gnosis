@@ -1,0 +1,11 @@
+{
+	"name": "blocks2html",
+	"version": "1.0.0",
+	"type": "commonjs",
+	"directus:extension": {
+		"type": "hook",
+		"path": "index.cjs",
+		"source": "index.cjs",
+		"host": "^12.0.0"
+	}
+}
