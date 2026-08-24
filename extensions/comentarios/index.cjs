@@ -10,7 +10,7 @@ const EXPECTED_HOSTNAMES = new Set([
 
 module.exports = function registerEndpoint(router, { database }) {
 	router.post("/", async (req, res) => {
-		const { post_id, parent, author_name, author_email, content, turnstile } = req.body || {};
+		const { post_id, parent, author_name, author_email, author_url, content, turnstile } = req.body || {};
 
 		if (!post_id || !author_name || !content || !String(content).trim()) {
 			return res.status(400).json({ errors: [{ message: "Campos obrigatórios: post_id, author_name, content" }] });
@@ -59,7 +59,7 @@ module.exports = function registerEndpoint(router, { database }) {
 					parent: parent ? parseInt(parent, 10) : 0,
 					author_name: String(author_name).trim(),
 					author_email: String(author_email || "").trim(),
-					author_url: "",
+					author_url: String(author_url || "").trim().slice(0, 300),
 					content: String(content).trim(),
 					date: new Date(),
 					status: "pending",
