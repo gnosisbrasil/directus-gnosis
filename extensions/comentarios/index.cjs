@@ -22,14 +22,13 @@ module.exports = function registerEndpoint(router, { database }) {
 			return res.status(400).json({ errors: [{ message: "Comentário muito longo" }] });
 		}
 
-		// Turnstile (anti-bot) — bypass de debug temporário
-		const debugBypass = req.get("x-debug-comentarios") === "gnosis-internal-2026";
-		if (!debugBypass && (typeof turnstile !== "string" || turnstile.length === 0 || turnstile.length > 2048)) {
+		// Turnstile (anti-bot)
+		if (typeof turnstile !== "string" || turnstile.length === 0 || turnstile.length > 2048) {
 			return res.status(403).json({ errors: [{ message: "Verificação anti-bot inválida" }] });
 		}
 
-		let result = { success: true, hostname: "nuxt.gnosisbrasil.com" };
-		if (!debugBypass) {
+		let result;
+		if (true) {
 		try {
 			const r = await fetch(SITEVERIFY_URL, {
 				method: "POST",
